@@ -1,5 +1,11 @@
 #include "../sensors.h"
 
+/**
+ * @brief callback to handle selected item in home menu
+ * 
+ * @param ctx app context
+ * @param index index of selected item
+ */
 static void home_callback(void* ctx, uint32_t index) {
     SensorsApp* s = ctx;
     switch(index) {
@@ -14,6 +20,11 @@ static void home_callback(void* ctx, uint32_t index) {
     }
 }
 
+/**
+ * @brief runs when entering the home menu scene
+ * 
+ * @param ctx app context
+ */
 void sensors_scene_home_on_enter(void* ctx) {
     SensorsApp* s = ctx;
     submenu_reset(s->main_menu);
@@ -23,6 +34,14 @@ void sensors_scene_home_on_enter(void* ctx) {
     view_dispatcher_switch_to_view(s->vd, SensorsAppView_Menu);
 }
 
+/**
+ * @brief runs when an event is detected in the home menu scene
+ * 
+ * @param ctx app context
+ * @param evt detected event
+ * @return true event was handled
+ * @return false event was not handled
+ */
 bool sensors_scene_home_on_event(void* ctx, SceneManagerEvent evt) {
     SensorsApp* s = ctx;
     bool consumed = false;
@@ -49,6 +68,11 @@ bool sensors_scene_home_on_event(void* ctx, SceneManagerEvent evt) {
     return consumed;
 }
 
+/**
+ * @brief runs when leaving the home menu scene
+ * 
+ * @param ctx app context
+ */
 void sensors_scene_home_on_exit(void* ctx) {
     SensorsApp* s = ctx;
     submenu_reset(s->main_menu);
