@@ -9,6 +9,8 @@
 
 #include "../sensors.h"
 
+#define BH1750_ADDRESS 0x23
+
 const char* bh1750_mode_strings[] = {
     "Oneshot",
     "Continuous",
