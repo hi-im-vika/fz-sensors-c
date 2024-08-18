@@ -64,6 +64,42 @@ static void bh1750_callback(VariableItem* i) {
 }
 
 /**
+ * @brief callback to handle when enter key pressed on item in VariableItemList
+ * 
+ * @param ctx 
+ * @param index 
+ */
+static void bh1750_enter_callback(void* ctx, uint32_t index) {
+    SensorsApp* s = ctx;
+    if(index == BH1750VarItemListIndexSave) {
+        VariableItem* current_item = variable_item_list_get(s->sensor_config, index);
+        variable_item_set_current_value_text(current_item, "Wait...");
+        // get word representing mode by retrieving current value index of mode item in VariableItemList to lookup in bh1750_mode_cmd array
+        uint8_t mode_word = bh1750_mode_cmd[variable_item_get_current_value_index(
+            variable_item_list_get(s->sensor_config, BH1750VarItemListIndexMode))];
+        // get word representing resolution by retrieving current value index of resolution item in VariableItemList to lookup in bh1750_res_cmd array
+        uint8_t res_word = bh1750_res_cmd[variable_item_get_current_value_index(
+            variable_item_list_get(s->sensor_config, BH1750VarItemListIndexResolution))];
+
+        // once config words are set up, prep for i2c tx
+        // reset tx buffer
+        memset(s->it->tx, 0, 256);
+        s->it->address = BH1750_ADDRESS;
+        s->it->tx_bytes = 1; // only expect to send one byte
+        s->it->tx[0] = mode_word |
+                       res_word; // AND upper and lower word to get resulting config byte
+        s->it->rx_bytes = 1;     // expecting no bytes but zero causes undefined behaviour
+        i2c_tx(s->it);
+        // update list item value text to reflect result of saving settings
+        if(s->it->i2c_ok) {
+            variable_item_set_current_value_text(current_item, "Saved!");
+        } else {
+            variable_item_set_current_value_text(current_item, "Error!");
+        }
+    }
+}
+
+/**
  * @brief runs when entering the BH1750 scene
  * 
  * @param ctx app context
