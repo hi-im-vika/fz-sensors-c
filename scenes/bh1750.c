@@ -76,6 +76,10 @@ void sensors_scene_bh1750_on_enter(void* ctx) {
 
     // save config to sensor
     i = variable_item_list_add(l, "Save", 0, NULL, s);
+    variable_item_list_set_enter_callback(
+        l,
+        bh1750_enter_callback, // callback function to invoke on OK press
+        s);                    // context object to pass to the callback function
 
     // switch to view after setup
     view_dispatcher_switch_to_view(s->vd, SensorsAppView_SensorConfig);
