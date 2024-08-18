@@ -68,6 +68,7 @@ SensorsApp* sensors_app_init() {
     SensorsApp* s = malloc(sizeof(SensorsApp));
     sm_init(s);
     vd_init(s);
+    s->it = i2c_init();
     return s;
 }
 
@@ -82,6 +83,7 @@ void sensors_app_free(SensorsApp* s) {
     view_dispatcher_free(s->vd);
     submenu_free(s->main_menu);
     variable_item_list_free(s->sensor_config);
+    i2c_free(s->it);
     free(s);
 }
 
