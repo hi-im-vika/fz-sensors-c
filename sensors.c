@@ -16,7 +16,7 @@ void vd_init(SensorsApp* s) {
     view_dispatcher_enable_queue(s->vd);
 
     // allocate views
-    s->menu = menu_alloc();
+    s->menu = submenu_alloc();
     s->sensor_data = empty_screen_alloc();
 
     // assign callback to pass events from views to scene manager
@@ -25,7 +25,7 @@ void vd_init(SensorsApp* s) {
     view_dispatcher_set_navigation_event_callback(s->vd, navigation_event_handler);
 
     // add views to dispatcher
-    view_dispatcher_add_view(s->vd, SensorsAppView_Menu, menu_get_view(s->menu));
+    view_dispatcher_add_view(s->vd, SensorsAppView_Menu, submenu_get_view(s->menu));
     view_dispatcher_add_view(s->vd, SensorsAppView_Sensor, empty_screen_get_view(s->sensor_data));
 }
 
@@ -43,7 +43,7 @@ void sensors_app_free(SensorsApp* s) {
     view_dispatcher_remove_view(s->vd, SensorsAppView_Menu);
     view_dispatcher_remove_view(s->vd, SensorsAppView_Sensor);
     view_dispatcher_free(s->vd);
-    menu_free(s->menu);
+    submenu_free(s->menu);
     empty_screen_free(s->sensor_data);
     free(s);
 }

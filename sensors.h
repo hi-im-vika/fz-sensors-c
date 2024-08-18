@@ -3,7 +3,7 @@
 #include <gui/gui.h>
 #include <gui/scene_manager.h>
 #include <gui/view_dispatcher.h>
-#include <gui/modules/menu.h>
+#include <gui/modules/submenu.h>
 #include <gui/modules/empty_screen.h>
 #include <gui/handlers.h>
 
@@ -28,6 +28,6 @@ typedef struct {
     SceneManager* sm;
     ViewDispatcher* vd;
 
-    Menu* menu;
+    Submenu* menu;
     EmptyScreen* sensor_data;
 } SensorsApp;
