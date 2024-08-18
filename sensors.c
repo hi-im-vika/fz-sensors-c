@@ -1,22 +1,45 @@
 #include "sensors.h"
 
+/**
+ * @brief callback for handling navigation events
+ * 
+ * @param ctx app context
+ * @return true event was handled
+ * @return false event was not handled
+ */
 bool navigation_event_handler(void* ctx) {
     SensorsApp* s = ctx;
     return scene_manager_handle_back_event(s->sm);
 }
 
+/**
+ * @brief callback for handling custom events
+ * 
+ * @param ctx app context
+ * @param custom_event the custom event that happened
+ * @return true event was handled
+ * @return false event was not handled
+ */
 bool custom_event_handler(void* ctx, uint32_t custom_event) {
     SensorsApp* s = ctx;
     return scene_manager_handle_custom_event(s->sm, custom_event);
 }
 
-// init scene manager
+/**
+ * @brief initializes scene manager
+ * 
+ * @param s pointer to SensorsApp object (app context)
+ */
 void sm_init(SensorsApp* s) {
     // allocate memory for scene manager
     s->sm = scene_manager_alloc(&handlers, s);
 }
 
-// init view dispatcher
+/**
+ * @brief initializes view dispatcher
+ * 
+ * @param s pointer to SensorsApp object (app context)
+ */
 void vd_init(SensorsApp* s) {
     // allocate memory for view dispatcher
     s->vd = view_dispatcher_alloc();
@@ -37,7 +60,10 @@ void vd_init(SensorsApp* s) {
         s->vd, SensorsAppView_SensorConfig, variable_item_list_get_view(s->sensor_config));
 }
 
-// app init stuff
+/**
+ * @brief initialize
+ * @return SensorsApp* pointer to SensorsApp object
+ */
 SensorsApp* sensors_app_init() {
     SensorsApp* s = malloc(sizeof(SensorsApp));
     sm_init(s);
@@ -45,7 +71,10 @@ SensorsApp* sensors_app_init() {
     return s;
 }
 
-// free all memory related to app
+/**
+ * @brief frees all memory used by app
+ * @param s pointer to SensorsApp object (app context)
+ */
 void sensors_app_free(SensorsApp* s) {
     scene_manager_free(s->sm);
     view_dispatcher_remove_view(s->vd, SensorsAppView_Menu);
@@ -56,7 +85,12 @@ void sensors_app_free(SensorsApp* s) {
     free(s);
 }
 
-// entrypoint
+/**
+ * @brief main app entrypoint
+ * 
+ * @param p i don't know lmao
+ * @return int32_t error code
+ */
 int32_t sensors_app(void* p) {
     UNUSED(p);
 
