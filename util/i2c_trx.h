@@ -15,5 +15,7 @@ typedef struct {
     uint8_t rx_bytes;
 } I2CTRx;
 
+I2CTRx* i2c_init();
+void i2c_free(I2CTRx* i);
 void i2c_tx(I2CTRx* i);
 void i2c_rx(I2CTRx* i);

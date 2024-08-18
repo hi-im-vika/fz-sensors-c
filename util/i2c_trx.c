@@ -9,6 +9,10 @@ I2CTRx* i2c_init() {
     return i;
 }
 
+void i2c_free(I2CTRx* i) {
+    free(i);
+}
+
 void i2c_tx(I2CTRx* i) {
     // wipe rx data to prepare for rx
     memset(i->rx, 0, 256);
