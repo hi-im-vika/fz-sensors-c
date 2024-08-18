@@ -1,4 +1,4 @@
-#include "../sensors.h"
+#include "../sensors_i.h"
 
 /**
  * @brief callback to handle selected item in home menu

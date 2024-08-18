@@ -7,7 +7,7 @@
  * 
  */
 
-#include "../sensors.h"
+#include "../sensors_i.h"
 
 #define BH1750_ADDRESS 0x23
 

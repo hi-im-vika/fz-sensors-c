@@ -15,13 +15,15 @@
 // keep track of app view
 typedef enum {
     SensorsAppView_Menu,
-    SensorsAppView_SensorConfig
+    SensorsAppView_SensorConfig,
+    SensorsAppView_EnterBytes,
 } SensorsAppView;
 
 // custom events for choosing sensor
 typedef enum {
     SensorsAppEvent_UseDummySensor,
     SensorsAppEvent_UseBH1750,
+    SensorsAppEvent_EnterBytes,
 } SensorsAppEvent;
 
 // menu selections

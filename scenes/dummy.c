@@ -7,7 +7,7 @@
  * 
  */
 
-#include "../sensors.h"
+#include "../sensors_i.h"
 
 /**
  * @brief runs when entering the dummy sensor scene
