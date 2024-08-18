@@ -51,8 +51,6 @@ void sensors_app_free(SensorsApp* s) {
 // entrypoint
 int32_t sensors_app(void* p) {
     UNUSED(p);
-    FURI_LOG_I("TEST", "Hello world");
-    FURI_LOG_I("TEST", "I'm sensors!");
 
     // begin main app init
     SensorsApp* s = sensors_app_init();
