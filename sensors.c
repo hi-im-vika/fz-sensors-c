@@ -1,5 +1,9 @@
 #include "sensors.h"
 
+bool navigation_event_handler(void* ctx) {
+    SensorsApp* s = ctx;
+    return scene_manager_handle_back_event(s->sm);
+}
 
 void sm_init(SensorsApp* s) {
     // init scene manager with list of all handlers
