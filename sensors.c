@@ -42,6 +42,10 @@ void sensors_app_init(SensorsApp* s) {
     view_dispatcher_set_event_callback_context(s->vd, s);
     // view_dispatcher_set_custom_event_callback(s->vd, ViewDispatcherCustomEventCallback callback)
     // view_dispatcher_set_navigation_event_callback(s->vd, ViewDispatcherNavigationEventCallback callback)
+
+    // add views to dispatcher
+    view_dispatcher_add_view(s->vd, SensorsAppView_Menu, menu_get_view(s->menu));
+    view_dispatcher_add_view(s->vd, SensorsAppView_Sensor, empty_screen_get_view(s->sensor_data));
 }
 
 // main app logic
