@@ -33,6 +33,10 @@ void sensors_app_init(SensorsApp* s) {
     // init view dispatcher
     s->vd = view_dispatcher_alloc();
     view_dispatcher_enable_queue(s->vd);
+
+    // allocate views
+    s->menu = menu_alloc();
+    s->sensor_data = empty_screen_alloc();
 }
 
 // main app logic
