@@ -16,10 +16,21 @@ const char* bh1750_mode_strings[] = {
     "Continuous",
 };
 
+const uint8_t bh1750_mode_cmd[] = {
+    0b00100000,
+    0b00010000,
+};
+
 const char* bh1750_res_strings[] = {
     "0.5 lx",
     "1 lx",
     "4 lx",
+};
+
+const uint8_t bh1750_res_cmd[] = {
+    0b00000001,
+    0b00000000,
+    0b00000011,
 };
 
 enum BH1750VarItemListIndex {
