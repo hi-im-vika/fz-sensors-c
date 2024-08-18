@@ -25,6 +25,14 @@ void vd_init(SensorsApp* s) {
     view_dispatcher_add_view(s->vd, SensorsAppView_Sensor, empty_screen_get_view(s->sensor_data));
 }
 
+// app init stuff
+SensorsApp* sensors_app_init() {
+    SensorsApp* s = malloc(sizeof(SensorsApp));
+    sm_init(s);
+    vd_init(s);
+    return s;
+}
+
 // free all memory related to app
 void sensors_app_free(SensorsApp* s) {
     scene_manager_free(s->sm);
