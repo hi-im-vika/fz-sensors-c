@@ -9,6 +9,11 @@
 
 #include "../sensors.h"
 
+/**
+ * @brief runs when entering the dummy sensor scene
+ * 
+ * @param ctx app context
+ */
 void sensors_scene_dummy_on_enter(void* ctx) {
     // get context
     SensorsApp* s = ctx;
@@ -35,12 +40,25 @@ void sensors_scene_dummy_on_enter(void* ctx) {
     view_dispatcher_switch_to_view(s->vd, SensorsAppView_SensorConfig);
 }
 
+/**
+ * @brief runs when an event is detected in the dummy sensor scene
+ * 
+ * @param ctx 
+ * @param evt 
+ * @return true 
+ * @return false 
+ */
 bool sensors_scene_dummy_on_event(void* ctx, SceneManagerEvent evt) {
     UNUSED(ctx);
     UNUSED(evt);
     return false;
 }
 
+/**
+ * @brief runs when leaving the dummy sensor scene
+ * 
+ * @param ctx 
+ */
 void sensors_scene_dummy_on_exit(void* ctx) {
     SensorsApp* s = ctx;
     variable_item_list_reset(s->sensor_config);
