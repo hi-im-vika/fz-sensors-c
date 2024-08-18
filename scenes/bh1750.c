@@ -37,6 +37,7 @@ enum BH1750VarItemListIndex {
     BH1750VarItemListIndexMode,       ///< item with current sensor mode of operation
     BH1750VarItemListIndexResolution, ///< item with current sensor resolution
     BH1750VarItemListIndexSave,       ///< item to save settings to sensor
+    BH1750VarItemListIndexRead,       ///< item to read from sensor
 };
 
 /**
@@ -71,6 +72,7 @@ static void bh1750_callback(VariableItem* i) {
  */
 static void bh1750_enter_callback(void* ctx, uint32_t index) {
     SensorsApp* s = ctx;
+    I2CTRx* i = s->it;
     if(index == BH1750VarItemListIndexSave) {
         VariableItem* current_item = variable_item_list_get(s->sensor_config, index);
         variable_item_set_current_value_text(current_item, "Wait...");
@@ -83,15 +85,14 @@ static void bh1750_enter_callback(void* ctx, uint32_t index) {
 
         // once config words are set up, prep for i2c tx
         // reset tx buffer
-        memset(s->it->tx, 0, 256);
-        s->it->address = BH1750_ADDRESS;
-        s->it->tx_bytes = 1; // only expect to send one byte
-        s->it->tx[0] = mode_word |
-                       res_word; // AND upper and lower word to get resulting config byte
-        s->it->rx_bytes = 1;     // expecting no bytes but zero causes undefined behaviour
-        i2c_tx(s->it);
+        memset(i->tx, 0, 256);
+        i->address = BH1750_ADDRESS;
+        i->tx_bytes = 1;                 // only expect to send one byte
+        i->tx[0] = mode_word | res_word; // AND upper and lower word to get resulting config byte
+        i->rx_bytes = 1;                 // expecting no bytes but zero causes undefined behaviour
+        i2c_tx(i);
         // update list item value text to reflect result of saving settings
-        if(s->it->i2c_ok) {
+        if(i->i2c_ok) {
             variable_item_set_current_value_text(current_item, "Saved!");
         } else {
             variable_item_set_current_value_text(current_item, "Error!");
@@ -144,6 +145,13 @@ void sensors_scene_bh1750_on_enter(void* ctx) {
 
     // save config to sensor
     i = variable_item_list_add(l, "Save", 0, NULL, s);
+    variable_item_list_set_enter_callback(
+        l,
+        bh1750_enter_callback, // callback function to invoke on OK press
+        s);                    // context object to pass to the callback function
+
+    // save config to sensor
+    i = variable_item_list_add(l, "Read", 0, NULL, s);
     variable_item_list_set_enter_callback(
         l,
         bh1750_enter_callback, // callback function to invoke on OK press
