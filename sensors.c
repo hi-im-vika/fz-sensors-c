@@ -25,6 +25,10 @@ typedef struct {
     ViewDispatcher* vd;
 } SensorsApp;
 
+// app init stuff
+void sensors_app_init(SensorsApp* s) {
+}
+
 // main app logic
 int32_t sensors_app(void* p) {
     UNUSED(p);
