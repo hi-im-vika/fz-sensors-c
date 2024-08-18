@@ -1,9 +1,12 @@
 #include "sensors.h"
 
 
+void sm_init(SensorsApp* s) {
     // init scene manager with list of all handlers
-    s->sm = scene_manager_alloc(handlers, s);
+    s->sm = scene_manager_alloc(&handlers, s);
+}
 
+void vd_init(SensorsApp* s) {
     // init view dispatcher
     s->vd = view_dispatcher_alloc();
     view_dispatcher_enable_queue(s->vd);
