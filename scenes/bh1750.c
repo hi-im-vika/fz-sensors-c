@@ -20,10 +20,10 @@ const char* bh1750_res_strings[] = {
     "4 lx",
 };
 
-enum VarItemListIndex {
-    VarItemListIndexMode,
-    VarItemListIndexResolution,
-    VarItemListIndexSave,
+enum BH1750VarItemListIndex {
+    BH1750VarItemListIndexMode,
+    BH1750VarItemListIndexResolution,
+    BH1750VarItemListIndexSave,
 };
 
 static void bh1750_callback(VariableItem* i) {
@@ -33,13 +33,13 @@ static void bh1750_callback(VariableItem* i) {
     uint8_t index = variable_item_get_current_value_index(i);
     uint8_t var_item_list_index = variable_item_list_get_selected_item_index(s->sensor_config);
     switch(var_item_list_index) {
-    case VarItemListIndexMode:
+    case BH1750VarItemListIndexMode:
         variable_item_set_current_value_text(i, bh1750_mode_strings[index]);
         break;
-    case VarItemListIndexResolution:
+    case BH1750VarItemListIndexResolution:
         variable_item_set_current_value_text(i, bh1750_res_strings[index]);
         break;
-    case VarItemListIndexSave:
+    case BH1750VarItemListIndexSave:
         break;
     }
     variable_item_set_current_value_index(i, index);
