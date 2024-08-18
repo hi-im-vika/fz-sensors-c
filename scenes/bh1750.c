@@ -21,11 +21,16 @@ const char* bh1750_res_strings[] = {
 };
 
 enum BH1750VarItemListIndex {
-    BH1750VarItemListIndexMode,
-    BH1750VarItemListIndexResolution,
-    BH1750VarItemListIndexSave,
+    BH1750VarItemListIndexMode,       ///< item with current sensor mode of operation
+    BH1750VarItemListIndexResolution, ///< item with current sensor resolution
+    BH1750VarItemListIndexSave,       ///< item to save settings to sensor
 };
 
+/**
+ * @brief callback to handle change in item value in VariableItemList
+ * 
+ * @param i item in VariableItemList that changed
+ */
 static void bh1750_callback(VariableItem* i) {
     // get context
     SensorsApp* s = variable_item_get_context(i);
@@ -45,6 +50,11 @@ static void bh1750_callback(VariableItem* i) {
     variable_item_set_current_value_index(i, index);
 }
 
+/**
+ * @brief runs when entering this scene
+ * 
+ * @param ctx app context
+ */
 void sensors_scene_bh1750_on_enter(void* ctx) {
     // get context
     SensorsApp* s = ctx;
@@ -71,12 +81,25 @@ void sensors_scene_bh1750_on_enter(void* ctx) {
     view_dispatcher_switch_to_view(s->vd, SensorsAppView_SensorConfig);
 }
 
+/**
+ * @brief runs when an event is detected in this scene
+ * 
+ * @param ctx app context
+ * @param evt detected event
+ * @return true event was handled
+ * @return false event was not handled
+ */
 bool sensors_scene_bh1750_on_event(void* ctx, SceneManagerEvent evt) {
     UNUSED(ctx);
     UNUSED(evt);
     return false;
 }
 
+/**
+ * @brief runs when leaving this scene
+ * 
+ * @param ctx app context
+ */
 void sensors_scene_bh1750_on_exit(void* ctx) {
     SensorsApp* s = ctx;
     variable_item_list_reset(s->sensor_config);
