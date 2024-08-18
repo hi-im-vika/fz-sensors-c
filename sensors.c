@@ -29,6 +29,10 @@ typedef struct {
 void sensors_app_init(SensorsApp* s) {
     // init scene manager with list of all handlers
     s->sm = scene_manager_alloc(handlers, s);
+
+    // init view dispatcher
+    s->vd = view_dispatcher_alloc();
+    view_dispatcher_enable_queue(s->vd);
 }
 
 // main app logic
