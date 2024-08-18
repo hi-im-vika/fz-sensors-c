@@ -96,6 +96,25 @@ static void bh1750_enter_callback(void* ctx, uint32_t index) {
         } else {
             variable_item_set_current_value_text(current_item, "Error!");
         }
+    } else if(index == BH1750VarItemListIndexRead) {
+        VariableItem* current_item = variable_item_list_get(s->sensor_config, index);
+        variable_item_set_current_value_text(current_item, "Wait...");
+        // once config words are set up, prep for i2c tx
+        // reset tx buffer
+        memset(i->tx, 0, 256);
+        i->address = BH1750_ADDRESS;
+        i->rx_bytes = 2; // expecting no bytes but zero causes undefined behaviour
+        i2c_rx(i);
+        // update list item value text to reflect result of saving settings
+        if(i->i2c_ok) {
+            char val[10];
+            uint16_t lux = i->rx[0] << 8;
+            lux |= i->rx[1];
+            snprintf(val, sizeof(val), "%d", lux);
+            variable_item_set_current_value_text(current_item, val);
+        } else {
+            variable_item_set_current_value_text(current_item, "Error!");
+        }
     }
 }
 
