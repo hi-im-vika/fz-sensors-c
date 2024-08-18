@@ -12,6 +12,7 @@ typedef struct {
     uint8_t rx[256];
 
     bool i2c_ok;
+    uint8_t tx_bytes;
     uint8_t rx_bytes;
 } I2CTRx;
 
