@@ -34,5 +34,5 @@ typedef struct {
     ViewDispatcher* vd;
 
     Submenu* menu;
-    EmptyScreen* sensor_data;
+    VariableItemList* sensor_config;
 } SensorsApp;
