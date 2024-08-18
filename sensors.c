@@ -15,7 +15,7 @@
     // assign callback to pass events from views to scene manager
     view_dispatcher_set_event_callback_context(s->vd, s);
     // view_dispatcher_set_custom_event_callback(s->vd, ViewDispatcherCustomEventCallback callback)
-    // view_dispatcher_set_navigation_event_callback(s->vd, ViewDispatcherNavigationEventCallback callback)
+    view_dispatcher_set_navigation_event_callback(s->vd, navigation_event_handler);
 
     // add views to dispatcher
     view_dispatcher_add_view(s->vd, SensorsAppView_Menu, menu_get_view(s->menu));
