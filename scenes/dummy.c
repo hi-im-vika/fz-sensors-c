@@ -43,10 +43,10 @@ void sensors_scene_dummy_on_enter(void* ctx) {
 /**
  * @brief runs when an event is detected in the dummy sensor scene
  * 
- * @param ctx 
- * @param evt 
- * @return true 
- * @return false 
+ * @param ctx app context
+ * @param evt detected event
+ * @return true event was handled
+ * @return false event was not handled
  */
 bool sensors_scene_dummy_on_event(void* ctx, SceneManagerEvent evt) {
     UNUSED(ctx);
@@ -57,7 +57,7 @@ bool sensors_scene_dummy_on_event(void* ctx, SceneManagerEvent evt) {
 /**
  * @brief runs when leaving the dummy sensor scene
  * 
- * @param ctx 
+ * @param ctx app context
  */
 void sensors_scene_dummy_on_exit(void* ctx) {
     SensorsApp* s = ctx;
