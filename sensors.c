@@ -25,6 +25,17 @@ void vd_init(SensorsApp* s) {
     view_dispatcher_add_view(s->vd, SensorsAppView_Sensor, empty_screen_get_view(s->sensor_data));
 }
 
+// free all memory related to app
+void sensors_app_free(SensorsApp* s) {
+    scene_manager_free(s->sm);
+    view_dispatcher_remove_view(s->vd, SensorsAppView_Menu);
+    view_dispatcher_remove_view(s->vd, SensorsAppView_Sensor);
+    view_dispatcher_free(s->vd);
+    menu_free(s->menu);
+    empty_screen_free(s->sensor_data);
+    free(s);
+}
+
 // main app logic
 int32_t sensors_app(void* p) {
     UNUSED(p);
