@@ -57,7 +57,7 @@ static void bh1750_callback(VariableItem* i) {
     case BH1750VarItemListIndexResolution:
         variable_item_set_current_value_text(i, bh1750_res_strings[index]);
         break;
-    case BH1750VarItemListIndexSave:
+    default:
         break;
     }
     variable_item_set_current_value_index(i, index);
