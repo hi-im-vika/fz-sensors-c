@@ -37,6 +37,11 @@ void sensors_app_init(SensorsApp* s) {
     // allocate views
     s->menu = menu_alloc();
     s->sensor_data = empty_screen_alloc();
+
+    // assign callback to pass events from views to scene manager
+    view_dispatcher_set_event_callback_context(s->vd, s);
+    // view_dispatcher_set_custom_event_callback(s->vd, ViewDispatcherCustomEventCallback callback)
+    // view_dispatcher_set_navigation_event_callback(s->vd, ViewDispatcherNavigationEventCallback callback)
 }
 
 // main app logic
