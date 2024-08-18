@@ -13,8 +13,20 @@
 // keep track of app view
 typedef enum {
     SensorsAppView_Menu,
-    SensorsAppView_Sensor
+    SensorsAppView_SensorConfig
 } SensorsAppView;
+
+// custom events for choosing sensor
+typedef enum {
+    SensorsAppEvent_UseDummySensor,
+    SensorsAppEvent_UseBH1750,
+} SensorsAppEvent;
+
+// menu selections
+typedef enum {
+    SensorsAppMenu_SelectDummySensor,
+    SensorsAppMenu_SelectBH1750,
+} SensorsAppSelection;
 
 // keep track of app context
 typedef struct {
