@@ -51,7 +51,7 @@ static void bh1750_callback(VariableItem* i) {
 }
 
 /**
- * @brief runs when entering this scene
+ * @brief runs when entering the BH1750 scene
  * 
  * @param ctx app context
  */
@@ -82,7 +82,7 @@ void sensors_scene_bh1750_on_enter(void* ctx) {
 }
 
 /**
- * @brief runs when an event is detected in this scene
+ * @brief runs when an event is detected in the BH1750 scene
  * 
  * @param ctx app context
  * @param evt detected event
@@ -96,7 +96,7 @@ bool sensors_scene_bh1750_on_event(void* ctx, SceneManagerEvent evt) {
 }
 
 /**
- * @brief runs when leaving this scene
+ * @brief runs when leaving the BH1750 scene
  * 
  * @param ctx app context
  */
