@@ -10,6 +10,34 @@
 #include "../sensors_i.h"
 #include "dummy_i.h"
 
+static void dummy_callback(VariableItem* i) {
+    // get context
+    SensorsApp* s = variable_item_get_context(i);
+    // get index of current item value in VariableItemList
+    uint8_t index = variable_item_get_current_value_index(i);
+    // get index of current item in VariableItemList
+    uint8_t var_item_list_index = variable_item_list_get_selected_item_index(s->sensor_config);
+    // allocate memory for label
+    char current_value_label[10] = {0};
+
+    // check which item in VariableItemList started callback
+    switch(var_item_list_index) {
+        case DummyVarItemListIndexTxBytes:
+            s->it->tx_bytes = index;
+            snprintf(current_value_label, sizeof(current_value_label), "%d", s->it->tx_bytes);
+            variable_item_set_current_value_text(i, current_value_label);
+            break;
+        case DummyVarItemListIndexRxBytes:
+            s->it->rx_bytes = index + 1;
+            snprintf(current_value_label, sizeof(current_value_label), "%d", s->it->rx_bytes);
+            variable_item_set_current_value_text(i, current_value_label);
+            break;
+        default:
+            break;
+    }
+    variable_item_set_current_value_index(i, index);
+}
+
 /**
  * @brief callback to handle when enter key pressed on item in VariableItemList
  * 
