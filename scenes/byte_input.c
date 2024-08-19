@@ -11,6 +11,16 @@
 #include "dummy_i.h"
 
 /**
+ * @brief callback to handle when save button is pressed
+ * @details saves value to i2c struct and returns to previous scene
+ * @param ctx 
+ */
+void byte_text_input_callback(void* ctx) {
+    SensorsApp* s = ctx;
+    scene_manager_previous_scene(s->sm);
+}
+
+/**
  * @brief runs when entering the byte input scene
  * 
  * @param ctx app context
