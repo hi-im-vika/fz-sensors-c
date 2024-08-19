@@ -48,6 +48,8 @@ void vd_init(SensorsApp* s) {
     // allocate views
     s->main_menu = submenu_alloc();
     s->sensor_config = variable_item_list_alloc();
+    s->byte_input = byte_input_alloc();
+    s->text_box = text_box_alloc();
 
     // assign callback to pass events from views to scene manager
     view_dispatcher_set_event_callback_context(s->vd, s);
@@ -58,6 +60,8 @@ void vd_init(SensorsApp* s) {
     view_dispatcher_add_view(s->vd, SensorsAppView_Menu, submenu_get_view(s->main_menu));
     view_dispatcher_add_view(
         s->vd, SensorsAppView_SensorConfig, variable_item_list_get_view(s->sensor_config));
+    view_dispatcher_add_view(s->vd, SensorsAppView_ByteInput, byte_input_get_view(s->byte_input));
+    view_dispatcher_add_view(s->vd, SensorsAppView_TextBox, text_box_get_view(s->text_box));
 }
 
 /**
@@ -77,13 +81,28 @@ SensorsApp* sensors_app_init() {
  * @param s pointer to SensorsApp object (app context)
  */
 void sensors_app_free(SensorsApp* s) {
+    // free scene manager
     scene_manager_free(s->sm);
+
+    // remove views from view dispatcher
     view_dispatcher_remove_view(s->vd, SensorsAppView_Menu);
     view_dispatcher_remove_view(s->vd, SensorsAppView_SensorConfig);
+    view_dispatcher_remove_view(s->vd, SensorsAppView_ByteInput);
+    view_dispatcher_remove_view(s->vd, SensorsAppView_TextBox);
+
+    // free view dispatcher
     view_dispatcher_free(s->vd);
+
+    // free modules
     submenu_free(s->main_menu);
     variable_item_list_free(s->sensor_config);
+    byte_input_free(s->byte_input);
+    text_box_free(s->text_box);
+
+    // free i2c struct
     i2c_free(s->it);
+
+    // free program
     free(s);
 }
 
