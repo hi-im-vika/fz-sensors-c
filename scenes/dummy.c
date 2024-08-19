@@ -50,9 +50,34 @@ void sensors_scene_dummy_on_enter(void* ctx) {
  * @return false event was not handled
  */
 bool sensors_scene_dummy_on_event(void* ctx, SceneManagerEvent evt) {
-    UNUSED(ctx);
-    UNUSED(evt);
-    return false;
+    SensorsApp* s = ctx;
+    bool consumed = false;
+    switch(evt.type) {
+        case SceneManagerEventTypeCustom:
+            switch(evt.event) {
+                case Dummy_ByteInputEvent_Address:
+                    scene_manager_next_scene(s->sm, SensorsAppScene_ByteInput);
+                    consumed = true;
+                    break;
+                case Dummy_ByteInputEvent_Payload:
+                    scene_manager_next_scene(s->sm, SensorsAppScene_ByteInput);
+                    consumed = true;
+                    break;
+                case Dummy_Send:
+                    i2c_tx(s->it);
+                    scene_manager_next_scene(s->sm, SensorsAppScene_TextBox);
+                    consumed = true;
+                    break;
+                default:
+                    consumed = false;
+                    break;
+            }
+            break;
+        default: // eg. SceneManagerEventTypeBack, SceneManagerEventTypeTick
+            consumed = false;
+            break;
+    }
+    return consumed;
 }
 
 /**
