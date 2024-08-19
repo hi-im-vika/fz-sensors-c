@@ -11,6 +11,29 @@
 #include "dummy_i.h"
 
 /**
+ * @brief callback to handle when enter key pressed on item in VariableItemList
+ * 
+ * @param ctx app context
+ * @param index index of item
+ */
+static void dummy_enter_callback(void* ctx, uint32_t index) {
+    SensorsApp* s = ctx;
+    switch(index) {
+        case DummyVarItemListIndexAddress:
+            scene_manager_handle_custom_event(s->sm, Dummy_ByteInputEvent_Address);
+            break;
+        case DummyVarItemListIndexPayload:
+            scene_manager_handle_custom_event(s->sm, Dummy_ByteInputEvent_Payload);
+            break;
+        case DummyVarItemListIndexSend:
+            scene_manager_handle_custom_event(s->sm, Dummy_Send);
+            break;
+        default:
+            break;
+    }
+}
+
+/**
  * @brief runs when entering the dummy sensor scene
  * 
  * @param ctx app context
