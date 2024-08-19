@@ -23,19 +23,37 @@ void sensors_scene_dummy_on_enter(void* ctx) {
     VariableItemList* l = s->sensor_config;
     VariableItem* i;
     variable_item_list_reset(l);
+    char current_value_label[10] = {0};
+
+    // specify device address
+    i = variable_item_list_add(l, "Address", 1, NULL, s);
+    snprintf(current_value_label, sizeof(current_value_label), "0x%02X", s->it->address);
+    variable_item_set_current_value_text(i, current_value_label);
+    variable_item_list_set_enter_callback(l, dummy_enter_callback, s);
+
+    // specify bytes expected from device
+    i = variable_item_list_add(l, "TX Bytes", 9, dummy_callback, s);
+    variable_item_set_current_value_index(i, s->it->tx_bytes);
+    snprintf(current_value_label, sizeof(current_value_label), "%d", s->it->tx_bytes);
+    variable_item_set_current_value_text(i, current_value_label);
+    variable_item_list_set_enter_callback(l, dummy_enter_callback, s);
 
     // specify bytes to send to device
     i = variable_item_list_add(l, "Payload", 1, NULL, s);
-    variable_item_set_current_value_index(i, 0);
-    variable_item_set_current_value_text(i, "N/A");
+    snprintf(current_value_label, sizeof(current_value_label), "Edit");
+    variable_item_set_current_value_text(i, current_value_label);
+    variable_item_list_set_enter_callback(l, dummy_enter_callback, s);
 
     // specify bytes expected from device
-    i = variable_item_list_add(l, "RX Bytes", 1, NULL, s);
-    variable_item_set_current_value_index(i, 0);
-    variable_item_set_current_value_text(i, "N/A");
+    i = variable_item_list_add(l, "RX Bytes", 8, dummy_callback, s);
+    variable_item_set_current_value_index(i, (s->it->rx_bytes - 1));
+    snprintf(current_value_label, sizeof(current_value_label), "%d", (s->it->rx_bytes));
+    variable_item_set_current_value_text(i, current_value_label);
+    variable_item_list_set_enter_callback(l, dummy_enter_callback, s);
 
     // send command
     i = variable_item_list_add(l, "Send", 0, NULL, s);
+    variable_item_list_set_enter_callback(l, dummy_enter_callback, s);
 
     // switch to view after setup
     view_dispatcher_switch_to_view(s->vd, SensorsAppView_SensorConfig);
