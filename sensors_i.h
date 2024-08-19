@@ -46,4 +46,6 @@ typedef struct {
     VariableItemList* sensor_config;
     ByteInput* byte_input;
     TextBox* text_box;
+
+    char text_store[40];
 } SensorsApp;
