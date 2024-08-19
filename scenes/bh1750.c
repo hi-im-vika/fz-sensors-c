@@ -52,14 +52,14 @@ static void bh1750_callback(VariableItem* i) {
     uint8_t index = variable_item_get_current_value_index(i);
     uint8_t var_item_list_index = variable_item_list_get_selected_item_index(s->sensor_config);
     switch(var_item_list_index) {
-    case BH1750VarItemListIndexMode:
-        variable_item_set_current_value_text(i, bh1750_mode_strings[index]);
-        break;
-    case BH1750VarItemListIndexResolution:
-        variable_item_set_current_value_text(i, bh1750_res_strings[index]);
-        break;
-    default:
-        break;
+        case BH1750VarItemListIndexMode:
+            variable_item_set_current_value_text(i, bh1750_mode_strings[index]);
+            break;
+        case BH1750VarItemListIndexResolution:
+            variable_item_set_current_value_text(i, bh1750_res_strings[index]);
+            break;
+        default:
+            break;
     }
     variable_item_set_current_value_index(i, index);
 }
